@@ -69,26 +69,31 @@ class Game:
             print(card.reveal())
 
         # Determine the outcome
-        if player.hand_value > 21:
-            print('Player busts')
-            player.balance -= player.bet
-        elif self.dealer.hand_value > 21:
-            print('Dealer busts')
-        elif player.hand_value > self.dealer.hand_value:
+        if player.hand_value == 21:
             print('Player wins')
             player.balance += player.bet * 1.5
-        elif player.hand_value < self.dealer.hand_value:
-            print('Dealer wins')
+        elif player.hand_value > 21:
+            print('Player busts')
+            # player.balance -= player.bet
+        elif self.dealer.hand_value > 21:
+            print('Dealer busts')
+            if player.hand_value <= 21:
+                print('Player wins')
+                player.balance += player.bet
         else:
             print('Push')
+            player.balance += player.bet
 
         print(f'Player balance: {player.balance}')
         if player.balance < self.minimal_bet:
             print('Game over. You are out of money')
             return
-        play_again: str = input('Do you want to play again? ')
-        if play_again == 'yes':
+        play_again = input('Do you want to play again(Y/n)? ') or 'y'
+        play_again = play_again.upper()
+        if play_again == 'Y':
             self.play_round()
+        else:
+            print('Goodbye')
 
     def reset(self):
         self.dealer = Dealer()
