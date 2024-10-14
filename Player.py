@@ -1,10 +1,11 @@
 from Card import Card
 class Player:
     def __init__(self):
-        self.hand = []
-        self.hand_value = 0
-        self.hand_soft = False
-        self.bet = 0
+        self.hand: list[Card] = []
+        self.hand_value: int = 0
+        self.hand_soft: bool = False
+        self.bet: int = 0
+        self.balance: float = 1000
 
     def hit(self, card: Card):
         self.hand.append(card)
@@ -16,6 +17,11 @@ class Player:
             self.hand_soft = False
         if self.hand_value == 21:
             return
+        
+    def place_bet(self, bet: int) -> float:
+        self.bet = bet
+        self.balance -= bet
+        return self.balance
     
     def calculate_hand(self) -> int:
         hand = sorted(self.hand)

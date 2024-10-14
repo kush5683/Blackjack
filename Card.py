@@ -23,6 +23,10 @@ class Card:
         self.hidden = True
         return self
     
+    def reveal(self) -> 'Card':
+        self.hidden = False
+        return self
+    
     def __add__(self, other: 'Card') -> int:
         my_value: int = self.get_value()
         other_value: int = other.get_value()
